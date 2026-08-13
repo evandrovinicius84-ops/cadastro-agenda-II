@@ -1,108 +1,41 @@
-# cadastro-agenda-II
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Profissional</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-            text-align: center;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="number"],
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        textarea {
-            resize: vertical;
-            height: 100px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Resultado do Cadastro</title>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Formulário de Cadastro</h2>
-        <form action="processaCadastro.php" method="POST">
-            
-            <div class="form-group">
-                <label for="nome">Nome Completo:</label>
-                <input type="text" id="nome" name="nome" required>
-            </div>
+    <h2>Dados Cadastrados</h2>
 
-            <div class="form-group">
-                <label for="idade">Idade:</label>
-                <input type="number" id="idade" name="idade" min="0" required>
-            </div>
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Recebendo e armazenando cada informação em sua respectiva variável
+        $nome = htmlspecialchars($_POST['nome']);
+        $idade = htmlspecialchars($_POST['idade']);
+        $profissao = htmlspecialchars($_POST['profissao']);
+        $salario = htmlspecialchars($_POST['salario']);
+        $experiencia = htmlspecialchars($_POST['experiencia']);
 
-            <div class="form-group">
-                <label for="profissao">Profissão:</label>
-                <input type="text" id="profissao" name="profissao" required>
-            </div>
+        // Apresentando cada informação em uma linha utilizando elementos HTML
+        echo "<p><strong>Nome Completo:</strong> " . $nome . "</p>";
+        echo "<p><strong>Idade:</strong> " . $idade . " anos</p>";
+        echo "<p><strong>Profissão:</strong> " . $profissao . "</p>";
+        echo "<p><strong>Salário Pretendido:</strong> R$ " . $salario . "</p>";
+        echo "<p><strong>Experiência Anterior:</strong><br>" . nl2br($experiencia) . "</p>";
 
-            <div class="form-group">
-                <label for="salario">Salário Pretendido (R$):</label>
-                <input type="text" id="salario" name="salario" placeholder="Ex: 3500.00" required>
-            </div>
+        echo "<hr>";
 
-            <div class="form-group">
-                <label for="experiencia">Experiência Anterior:</label>
-                <textarea id="experiencia" name="experiencia" placeholder="Descreva brevemente suas experiências anteriores..." required></textarea>
-            </div>
+        // Mensagem personalizada utilizando obrigatoriamente o nome, a profissão e a experiência
+        echo "<p><strong>Mensagem do Sistema:</strong> Olá, <strong>$nome</strong>! Vimos que você atua como <strong>$profissao</strong> e possui uma trajetória marcada por: <em>\"$experiencia\"</em>. Seu perfil foi analisado com sucesso!</p>";
 
-            <button type="submit">Cadastrar</button>
-            
-        </form>
-    </div>
+    } else {
+        echo "<p>Nenhum dado foi enviado.</p>";
+    }
+    ?>
+
+    <br>
+    <a href="cadastro.html">Voltar ao Formulário</a>
 
 </body>
 </html>
